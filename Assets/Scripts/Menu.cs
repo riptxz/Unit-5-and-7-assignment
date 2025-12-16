@@ -11,6 +11,7 @@ public class Script : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        print("This is working");
+       
     }
+
 }
