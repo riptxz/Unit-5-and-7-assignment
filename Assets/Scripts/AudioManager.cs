@@ -8,7 +8,7 @@ public class AudioManager : MonoBehaviour
 
     public Sound[] sounds;
 
-    public float musicVolume, sfxVolume;
+    public float MusicVolume, SfxVolume;
 
     void Awake()
     {
@@ -40,10 +40,52 @@ public class AudioManager : MonoBehaviour
 
     }
 
+    void Start()
+    {
+        if (PlayerPrefs.HasKey("MusicVolume") == true)
+        {
+
+            //retrieve it and store it in a variable
+            MusicVolume = PlayerPrefs.GetFloat("MusicVolume");
+        }
+        else
+        {
+            // the key is null 
+            PlayerPrefs.SetFloat("MusicVolume", 1);
+        }
+
+        if (PlayerPrefs.HasKey("SfxVolume") == true)
+        {
+
+            //retrieve it and store it in a variable
+            SfxVolume = PlayerPrefs.GetFloat("SfxVolume");
+        }
+        else
+        {
+            // the key is null 
+            PlayerPrefs.SetFloat("SfxVolume", 1);
+        }
+
+    }
+
     public void PlayButtonClip(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
         s.source.Play();
 
     }
+
+    public void ChangeMusicVolume(float volume)
+    {
+        MusicVolume = PlayerPrefs.GetFloat("MusicVolume");
+    }
+
+    public void ChangeSFXVolume(float volume)
+    {
+        SfxVolume = PlayerPrefs.GetFloat("SfxVolume");
+    }
+
+
+
+
 }

@@ -1,24 +1,36 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UI;
 
 public class SliderScript : MonoBehaviour
 {
 
-    public Slider slider;
-    [SerializeField] private TextMeshProUGUI slidertext;
+   [SerializeField] Slider musicslider;
+   [SerializeField] Slider sfxslider;
+    public AudioMixer mixer;
+
+    const string MIXER_MUSIC = "MusicVolume";
+    const string MIXER_SFX = "SfxVolume";
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        slider.onValueChanged.AddListener((v) => {
-            slidertext.text = v.ToString("0%");
-        });
+        musicslider.onValueChanged.AddListener(SetMusicVolume);
+
+    
+
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    void SetMusicVolume(float value)
+    {
+        mixer.SetFloat(MIXER_MUSIC, value);
     }
 }
