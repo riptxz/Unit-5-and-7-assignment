@@ -1,14 +1,19 @@
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
+    [SerializeField] AudioMixer mixer;
 
     public Sound[] sounds;
-
     public float MusicVolume, SfxVolume;
+
+    public const string MUSIC_KEY = "MusicVolume";
+    public const string SFX_KEY = "SfxVolume";
+
 
     void Awake()
     {
@@ -22,6 +27,7 @@ public class AudioManager : MonoBehaviour
             float pitch = s.pitch;
             s.source.pitch = pitch;
             s.source.loop = s.loop;
+            s.source.outputAudioMixerGroup = s.mixerGroup;
         }
 
         // if instance is null, store a reference to this instance
@@ -37,6 +43,8 @@ public class AudioManager : MonoBehaviour
             // as we already have one
             Destroy(gameObject);
         }
+
+        LoadVolume();
 
     }
 
@@ -72,6 +80,8 @@ public class AudioManager : MonoBehaviour
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
         s.source.Play();
+        s.source.volume = s.volume;
+        
 
     }
 
@@ -85,7 +95,14 @@ public class AudioManager : MonoBehaviour
         SfxVolume = PlayerPrefs.GetFloat("SfxVolume");
     }
 
+    public void LoadVolume()
+    {
+        float musicVolume = PlayerPrefs.GetFloat(MUSIC_KEY, 1f);
+        float sfxVolume = PlayerPrefs.GetFloat(SFX_KEY, 1f);
 
+        mixer.SetFloat(SliderScript.MIXER_MUSIC, Mathf.Log10(musicVolume) * 20);
+        mixer.SetFloat(SliderScript.MIXER_SFX, Mathf.Log10(sfxVolume) * 20);
+    }
 
 
 }
