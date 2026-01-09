@@ -43,12 +43,13 @@ public class SliderScript : MonoBehaviour
         
     }
 
-    void SetMusicVolume(float value)
+    public void SetMusicVolume(float value)
     {
         mixer.SetFloat(MIXER_MUSIC, Mathf.Log10(value) * 20);
     }
 
-    void SetSFXVolume(float value)
+
+    public void SetSFXVolume(float value)
     {
         mixer.SetFloat(MIXER_SFX, Mathf.Log10(value) * 20);
     }
@@ -63,6 +64,12 @@ public class SliderScript : MonoBehaviour
         PlayerPrefs.SetFloat(AudioManager.MUSIC_KEY, musicslider.value);
         PlayerPrefs.SetFloat(AudioManager.SFX_KEY, sfxslider.value);
     }
+
+    
+
+    
+
+    
 
 
 
